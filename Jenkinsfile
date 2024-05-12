@@ -10,57 +10,43 @@ pipeline {
         
         stage('Build') {
             steps {
-                // Build the code using a build automation tool (e.g., Maven)
-                // Example:
-                // sh 'mvn clean package'
+                echo 'Building the code using a build automation tool (e.g., Maven)'
             }
         }
         
         stage('Unit and Integration Tests') {
             steps {
-                // Run unit tests and integration tests
-                // Example:
-                // sh 'mvn test'
+                echo 'Running unit tests and integration tests'
             }
         }
         
         stage('Code Analysis') {
             steps {
-                // Integrate a code analysis tool to analyze the code
-                // Example:
-                // sh 'sonar-scanner'
+                echo 'Integrating a code analysis tool to analyze the code'
             }
         }
         
         stage('Security Scan') {
             steps {
-                // Perform a security scan on the code
-                // Example:
-                // sh 'npm audit'
+                echo 'Performing a security scan on the code'
             }
         }
         
         stage('Deploy to Staging') {
             steps {
-                // Deploy the application to a staging server
-                // Example:
-                // sh 'ansible-playbook deploy_staging.yml'
+                echo 'Deploying the application to a staging server'
             }
         }
         
         stage('Integration Tests on Staging') {
             steps {
-                // Run integration tests on the staging environment
-                // Example:
-                // sh 'robot -d results tests/'
+                echo 'Running integration tests on the staging environment'
             }
         }
         
         stage('Deploy to Production') {
             steps {
-                // Deploy the application to a production server
-                // Example:
-                // sh 'ansible-playbook deploy_production.yml'
+                echo 'Deploying the application to a production server'
             }
         }
     }
