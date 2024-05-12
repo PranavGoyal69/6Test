@@ -1,47 +1,160 @@
 pipeline {
     agent any
+    
     stages {
+        stage('Checkout SCM') {
+            steps {
+                checkout scm
+            }
+        }
+        
         stage('Build') {
             steps {
-                // Build code using a build automation tool (e.g., Maven)
-                echo 'Building the code using Maven'
+                // Build the code using a build automation tool (e.g., Maven)
+                // Example:
+                // sh 'mvn clean package'
             }
         }
+        
         stage('Unit and Integration Tests') {
             steps {
-                // Run unit tests and integration tests using test automation tools
-                echo 'Running unit and integration tests'
+                // Run unit tests and integration tests
+                // Example:
+                // sh 'mvn test'
             }
         }
+        
         stage('Code Analysis') {
             steps {
-                // Integrate a code analysis tool (e.g., SonarQube)
-                echo 'Analyzing code using SonarQube'
+                // Integrate a code analysis tool to analyze the code
+                // Example:
+                // sh 'sonar-scanner'
             }
         }
+        
         stage('Security Scan') {
             steps {
-                // Perform security scan using a security scanning tool (e.g., OWASP ZAP)
-                echo 'Performing security scan using OWASP ZAP'
+                // Perform a security scan on the code
+                // Example:
+                // sh 'npm audit'
             }
         }
+        
         stage('Deploy to Staging') {
             steps {
-                // Deploy application to staging server (e.g., AWS EC2 instance)
-                echo 'Deploying application to staging server'
+                // Deploy the application to a staging server
+                // Example:
+                // sh 'ansible-playbook deploy_staging.yml'
             }
         }
+        
         stage('Integration Tests on Staging') {
             steps {
-                // Run integration tests on staging environment
-                echo 'Running integration tests on staging environment'
+                // Run integration tests on the staging environment
+                // Example:
+                // sh 'robot -d results tests/'
             }
         }
+        
         stage('Deploy to Production') {
             steps {
-                // Deploy application to production server (e.g., AWS EC2 instance)
-                echo 'Deploying application to production server'
+                // Deploy the application to a production server
+                // Example:
+                // sh 'ansible-playbook deploy_production.yml'
             }
+        }
+    }
+    
+    post {
+        success {
+            emailext subject: 'Build Successful',
+                body: 'Build completed successfully',
+                to: 'gpranav2901@gmail.com'
+        }
+        failure {
+            emailext subject: 'Build Failed',
+                body: 'Build failed',
+                to: 'gpranav2901@gmail.com'
+        }
+    }
+}
+pipeline {
+    agent any
+    
+    stages {
+        stage('Checkout SCM') {
+            steps {
+                checkout scm
+            }
+        }
+        
+        stage('Build') {
+            steps {
+                // Build the code using a build automation tool (e.g., Maven)
+                // Example:
+                // sh 'mvn clean package'
+            }
+        }
+        
+        stage('Unit and Integration Tests') {
+            steps {
+                // Run unit tests and integration tests
+                // Example:
+                // sh 'mvn test'
+            }
+        }
+        
+        stage('Code Analysis') {
+            steps {
+                // Integrate a code analysis tool to analyze the code
+                // Example:
+                // sh 'sonar-scanner'
+            }
+        }
+        
+        stage('Security Scan') {
+            steps {
+                // Perform a security scan on the code
+                // Example:
+                // sh 'npm audit'
+            }
+        }
+        
+        stage('Deploy to Staging') {
+            steps {
+                // Deploy the application to a staging server
+                // Example:
+                // sh 'ansible-playbook deploy_staging.yml'
+            }
+        }
+        
+        stage('Integration Tests on Staging') {
+            steps {
+                // Run integration tests on the staging environment
+                // Example:
+                // sh 'robot -d results tests/'
+            }
+        }
+        
+        stage('Deploy to Production') {
+            steps {
+                // Deploy the application to a production server
+                // Example:
+                // sh 'ansible-playbook deploy_production.yml'
+            }
+        }
+    }
+    
+    post {
+        success {
+            emailext subject: 'Build Successful',
+                body: 'Build completed successfully',
+                to: 'gpranav2901@gmail.com'
+        }
+        failure {
+            emailext subject: 'Build Failed',
+                body: 'Build failed',
+                to: 'gpranav2901@gmail.com'
         }
     }
 }
