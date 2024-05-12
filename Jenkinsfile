@@ -66,16 +66,15 @@ pipeline {
     }
     
     post {
-                success {
-                    emailext subject: 'Build Successful',
-                        body: 'Build completed successfully',
-                        to: 'gpranav2901@gmail.com'
-                }
-                failure {
-                    emailext subject: 'Build Failed',
-                        body: 'Build failed',
-                        to: 'gpranav2901@gmail.com'
-                }
+        success {
+            emailext subject: 'Build Successful',
+                body: 'Build completed successfully',
+                to: 'gpranav2901@gmail.com'
+        }
+        failure {
+            emailext subject: 'Build Failed',
+                body: 'Build failed',
+                to: 'gpranav2901@gmail.com'
         }
     }
-
+}
