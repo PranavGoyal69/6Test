@@ -2,79 +2,75 @@ pipeline {
     agent any
     
     stages {
+        stage('Checkout SCM') {
+            steps {
+                checkout scm
+            }
+        }
+        
         stage('Build') {
             steps {
-                // Build the code using Maven
-                sh 'mvn clean package'
+                // Build the code using a build automation tool (e.g., Maven)
+                // Example:
+                // sh 'mvn clean package'
             }
         }
         
         stage('Unit and Integration Tests') {
             steps {
-                // Run unit tests using JUnit and integration tests using a tool like Selenium
-                sh 'mvn test'
+                // Run unit tests and integration tests
+                // Example:
+                // sh 'mvn test'
             }
         }
         
         stage('Code Analysis') {
             steps {
-                // Integrate SonarQube for code analysis
-                script {
-                    def scannerHome = tool 'SonarQubeScanner'
-                    withSonarQubeEnv('SonarQube') {
-                        sh "${scannerHome}/bin/sonar-scanner"
-                    }
-                }
+                // Integrate a code analysis tool to analyze the code
+                // Example:
+                // sh 'sonar-scanner'
             }
         }
         
         stage('Security Scan') {
             steps {
-                // Perform security scan using OWASP ZAP
-                sh 'zap-full-scan.py -t http://your_application_url'
+                // Perform a security scan on the code
+                // Example:
+                // sh 'npm audit'
             }
         }
         
         stage('Deploy to Staging') {
             steps {
-                // Deploy application to staging server (e.g., AWS EC2 instance)
-                sh 'ssh user@staging-server "deploy_script.sh"'
+                // Deploy the application to a staging server
+                // Example:
+                // sh 'ansible-playbook deploy_staging.yml'
             }
         }
         
         stage('Integration Tests on Staging') {
             steps {
-                // Run integration tests on staging environment
-                sh 'run_integration_tests.sh'
+                // Run integration tests on the staging environment
+                // Example:
+                // sh 'robot -d results tests/'
             }
         }
         
         stage('Deploy to Production') {
             steps {
-                // Deploy application to production server (e.g., AWS EC2 instance)
-                sh 'ssh user@production-server "deploy_script.sh"'
+                // Deploy the application to a production server
+                // Example:
+                // sh 'ansible-playbook deploy_production.yml'
             }
         }
     }
     
     post {
-        success {
-            // Send notification email upon successful completion
-            emailext (
-                to: 'gpranav2901@gmail.com',
-                subject: "Pipeline Status: SUCCESS",
-                body: "Pipeline completed successfully.",
-                attachmentsPattern: '**/*.log'
-            )
-        }
-        failure {
-            // Send notification email upon failure
-            emailext (
-                to: 'gpranav2901@gmail.com',
-                subject: "Pipeline Status: FAILURE",
-                body: "Pipeline failed. Please check logs for details.",
-                attachmentsPattern: '**/*.log'
-            )
+        always {
+            // Send an email notification
+            emailext subject: 'Pipeline Status',
+                      body: 'The pipeline execution has finished.',
+                      to: 'gpranav2901@gmail.com'
         }
     }
 }
